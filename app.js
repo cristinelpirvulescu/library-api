@@ -50,13 +50,7 @@ const updateBook = (req, res) => {
   });
 };
 
-app.get('/api/books', getBooks);
-
-app.post('/api/books', addBook);
-
-app.put('/api/books/:id', updateBook);
-
-app.delete('/api/books/:id', function(req, res) {
+const deleteBook = (req, res) => {
   const bookId = req.params.id;
   const condition = { _id: bookId };
 
@@ -67,12 +61,20 @@ app.delete('/api/books/:id', function(req, res) {
       res.sendStatus(200);
     }
   });
+};
+
+app.get('/api/books', getBooks);
+
+app.post('/api/books', addBook);
+
+app.put('/api/books/:id', updateBook);
+
+app.delete('/api/books/:id', deleteBook);
+
+app.get('*', (req, res) => {
+  res.sendFile('public/index.html', { root: __dirname });
 });
 
-app.get('*', function(req, res) {
-    res.sendFile('public/index.html', {root: __dirname});
-});
-
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log('listening on port 3000');
 });
