@@ -42,8 +42,10 @@ app.post('/api/books', addBook);
 
 app.put('/api/books/:id', function(req, res) {
   const reqBody = req.body;
+  const bookId = req.params.id;
+  const query = { _id: bookId };
 
-  Book.findOneAndUpdate({ _id: '56edcb41aef1a07f610f2256' }, reqBody, (err) => {
+  Book.findOneAndUpdate(query, reqBody, (err) => {
     if (err) {
       res.sendStatus(500);
     } else {
