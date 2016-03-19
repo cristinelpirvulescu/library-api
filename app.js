@@ -1,6 +1,10 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
-const Book = require('app/models/book.js');
+const Book = require('./models/book.js');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const getBooks = (req, res) => {
   Book.find((err, books) => {
@@ -40,7 +44,9 @@ app.put('/api/books/:id', function(req, res) {});
 
 app.delete('/api/books/:id', function(req, res) {});
 
-app.get('*', function(req, res) {});
+app.get('*', function(req, res) {
+    res.sendFile('public/index.html', {root: __dirname});
+});
 
 app.listen(3000, function() {
   console.log('listening on port 3000');
