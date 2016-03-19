@@ -39,9 +39,9 @@ const addBook = (req, res) => {
 const updateBook = (req, res) => {
   const reqBody = req.body;
   const bookId = req.params.id;
-  const query = { _id: bookId };
+  const condition = { _id: bookId };
 
-  Book.findOneAndUpdate(query, reqBody, (err) => {
+  Book.findOneAndUpdate(condition, reqBody, (err) => {
     if (err) {
       res.sendStatus(500);
     } else {
@@ -56,7 +56,18 @@ app.post('/api/books', addBook);
 
 app.put('/api/books/:id', updateBook);
 
-app.delete('/api/books/:id', function(req, res) {});
+app.delete('/api/books/:id', function(req, res) {
+  const bookId = req.params.id;
+  const condition = { _id: bookId };
+
+  Book.findOneAndRemove(condition, (err) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
 
 app.get('*', function(req, res) {
     res.sendFile('public/index.html', {root: __dirname});
