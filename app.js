@@ -14,7 +14,21 @@ const getBooks = (req, res) => {
 
 app.get('/api/books', getBooks);
 
-app.post('/api/books', function(req, res) {});
+app.post('/api/books', function(req, res) {
+  const reqBody = req.body;
+
+  const book = new Book({
+    title: 'Test title',
+  });
+
+  book.save(function(err) {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+});
 
 app.put('/api/books/:id', function(req, res) {});
 
