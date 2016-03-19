@@ -12,23 +12,29 @@ const getBooks = (req, res) => {
   });
 };
 
-app.get('/api/books', getBooks);
-
-app.post('/api/books', function(req, res) {
+const addBook = (req, res) => {
   const reqBody = req.body;
 
-  const book = new Book({
-    title: 'Test title',
+  const newBook = new Book({
+    title: reqBody.title,
+    author: reqBody.author,
+    ISBN: reqBody.isbn,
+    genre: reqBody.genre,
+    year: reqBody.year,
   });
 
-  book.save(function(err) {
+  newBook.save((err) => {
     if (err) {
       res.sendStatus(500);
     } else {
       res.sendStatus(200);
     }
   });
-});
+};
+
+app.get('/api/books', getBooks);
+
+app.post('/api/books', addBook);
 
 app.put('/api/books/:id', function(req, res) {});
 
