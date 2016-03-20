@@ -1,9 +1,14 @@
 const Book = require('../models/book');
 const User = require('../models/user');
+const config = require('../config');
 const express = require('express');
 const app = express();
 const router = module.exports = express.Router();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+
+app.set('secretToken', config.secret);
 
 const getBooks = (req, res) => {
   Book.find((err, books) => {
@@ -65,7 +70,7 @@ const deleteBook = (req, res) => {
 const createUser = (req, res) => {
   const reqBody = req.body;
   const newUser = new User({
-    name: reqBody.name,
+    username: reqBody.username,
     password: reqBody.password,
   });
 
