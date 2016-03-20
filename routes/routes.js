@@ -62,7 +62,7 @@ const deleteBook = (req, res) => {
   });
 };
 
-const createUser = (req, res) => (req, res) {
+const createUser = (req, res) => {
   const reqBody = req.body;
   const newUser = new User({
     name: reqBody.name,
