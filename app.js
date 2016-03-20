@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* Routes setup */
-app.use(routes);
+app.use('/api', routes);
 
 app.get('*', (req, res) => {
   res.sendFile('./public/index.html', { root: __dirname });
