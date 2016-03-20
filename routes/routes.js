@@ -61,10 +61,10 @@ const deleteBook = (req, res) => {
   });
 };
 
-router.get('/api/books', getBooks);
+router.get('/books', getBooks);
 
-router.post('/api/books', addBook);
+router.post('/books', addBook);
 
-router.put('/api/books/:id', updateBook);
+router.put('/books/:id', updateBook);
 
-router.delete('/api/books/:id', deleteBook);
+router.delete('/books/:id', deleteBook);
