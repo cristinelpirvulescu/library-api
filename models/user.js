@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
-const config = require('../config');
+const Schema = mongoose.Schema;
 
-mongoose.connect(config.database);
-
-module.exports = mongoose.model('User', {
-  name: 'string',
-  password: 'string',
+const UserSchema = new Schema({
+  name: {
+    type: 'string',
+    required: true,
+    index: {
+      unique: true,
+    },
+  },
+  password: {
+    type: 'string',
+    required: true,
+  },
 });
+
+module.exports = mongoose.model('User', UserSchema);
