@@ -1,6 +1,10 @@
-const Book = require('../models/book.js');
+const Book = require('../models/book');
+const User = require('../models/user');
 const express = require('express');
+const app = express();
 const router = module.exports = express.Router();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const getBooks = (req, res) => {
   Book.find((err, books) => {
@@ -14,8 +18,6 @@ const getBooks = (req, res) => {
 
 const addBook = (req, res) => {
   const reqBody = req.body;
-
-  console.log(req.body);
 
   const newBook = new Book({
     title: reqBody.title,
