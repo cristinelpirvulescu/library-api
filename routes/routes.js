@@ -70,9 +70,9 @@ const createUser = (req, res) => {
   });
 
   // save user to database
-  newUser.save(function(err) {
+  newUser.save((err) => {
     if (err) {
-      console.log(err); res.sendStatus(500);
+      res.sendStatus(500);
     }
 
     res.sendStatus(200);
