@@ -84,8 +84,7 @@ const createUser = (req, res) => {
   });
 };
 
-// authenticate route
-router.post('/auth', (req, res) => {
+const authenticateUser = (req, res) => {
   const reqBody = req.body;
   const passwordClear = reqBody.password;
 
@@ -123,9 +122,12 @@ router.post('/auth', (req, res) => {
       });
     });
   });
-});
+};
 
 router.post('/signup', createUser);
+
+// authenticate route
+router.post('/auth', authenticateUser);
 
 router.get('/books', getBooks);
 
