@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const config = require('../config');
 
-mongoose.connect('mongodb://localhost/library_db');
+mongoose.connect(config.database);
 
 module.exports = mongoose.model('Book', {
   ISBN: 'string',
