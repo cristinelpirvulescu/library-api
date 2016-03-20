@@ -4,7 +4,6 @@ const express = require('express');
 const app = express();
 const router = module.exports = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 const getBooks = (req, res) => {
   Book.find((err, books) => {
@@ -62,6 +61,22 @@ const deleteBook = (req, res) => {
     }
   });
 };
+
+router.post('/signup', function(req, res) {
+  const newUser = new User({
+    name: 'Test user',
+    password: 'test password',
+  });
+
+  // save user to database
+  newUser.save(function(err) {
+    if (err) {
+      console.log(err); res.sendStatus(500);
+    }
+
+    res.sendStatus(200);
+  });
+});
 
 router.get('/books', getBooks);
 
