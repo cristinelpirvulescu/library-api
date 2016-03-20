@@ -85,14 +85,14 @@ const createUser = (req, res) => {
 };
 
 // authenticate route
-router.post('/auth', function(req, res) {
+router.post('/auth', (req, res) => {
   const reqBody = req.body;
   const passwordClear = reqBody.password;
 
   // find the test user
-  User.findOne({ username: reqBody.username }, function(err, user) {
+  User.findOne({ username: reqBody.username }, (err, user) => {
     if (err) {
-      throw err;
+      return res.sendStatus(500);
     }
 
     if (!user) {
@@ -102,7 +102,7 @@ router.post('/auth', function(req, res) {
       });
     }
 
-    // if a user was found, proceed with verifying password
+    // check passwords matching
     bcrypt.compare(passwordClear, user.password, (errCompare, resCompare) => {
       if (!resCompare) {
         return res.json({
@@ -113,7 +113,7 @@ router.post('/auth', function(req, res) {
 
       // if user was found and the password is right create a token
       const token = jwt.sign(user, app.get('secretToken'), {
-        expiresIn: 3600, // expires in 24h
+        expiresIn: 3600, // expires in 1h
       });
 
       return res.json({
