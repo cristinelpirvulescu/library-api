@@ -84,6 +84,47 @@ const createUser = (req, res) => {
   });
 };
 
+// authenticate route
+router.post('/auth', function(req, res) {
+  const reqBody = req.body;
+  const passwordClear = reqBody.password;
+
+  // find the test user
+  User.findOne({ username: reqBody.username }, function(err, user) {
+    if (err) {
+      throw err;
+    }
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: 'Authentication failed. User not found.',
+      });
+    }
+
+    // if a user was found, proceed with verifying password
+    bcrypt.compare(passwordClear, user.password, (errCompare, resCompare) => {
+      if (!resCompare) {
+        return res.json({
+          success: false,
+          message: 'Authentication failed. Wrong password',
+        });
+      }
+
+      // if user was found and the password is right create a token
+      const token = jwt.sign(user, app.get('secretToken'), {
+        expiresIn: 3600, // expires in 24h
+      });
+
+      return res.json({
+        success: true,
+        message: 'Token was created.',
+        token: token,
+      });
+    });
+  });
+});
+
 router.post('/signup', createUser);
 
 router.get('/books', getBooks);
