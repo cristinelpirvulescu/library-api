@@ -17,44 +17,38 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre('save', function(next) {
-  const user = this;
-  console.log('pre-save');
+function generateHash(next) {
   // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) {
-    console.log('new-pass');
+  if (!this.isModified('password')) {
     next();
   }
 
-  bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+  bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
     if (err) {
-      console.log('err-genSalt');
-      // next(err);
+      next(err);
     }
 
     // hash the password with the new salt
-    bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.hash(this.password, salt, (err2, hash) => {
       if (err) {
-        console.log('err-hash-pass');
-        // next();
+        next();
       }
 
       // override the clear_text password with the hashed one
-      user.password = hash;
-      console.log(user.password);
+      this.password = hash;
       next();
     });
   });
-});
+}
 
-UserSchema.methods.comparePassword = function(candidatePassword, callback) {
-  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+UserSchema.pre('save', generateHash);
+
+UserSchema.methods.comparePassword = (candidatePassword, callback) => {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) {
-      console.log('cb-err');
       callback(err);
     }
 
-    console.log('compare');
     callback(null, isMatch);
   });
 };
