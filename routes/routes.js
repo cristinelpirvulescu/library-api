@@ -62,10 +62,11 @@ const deleteBook = (req, res) => {
   });
 };
 
-router.post('/signup', function(req, res) {
+const createUser = (req, res) => (req, res) {
+  const reqBody = req.body;
   const newUser = new User({
-    name: 'Test user',
-    password: 'test password',
+    name: reqBody.name,
+    password: reqBody.password,
   });
 
   // save user to database
@@ -76,7 +77,9 @@ router.post('/signup', function(req, res) {
 
     res.sendStatus(200);
   });
-});
+};
+
+router.post('/signup', createUser);
 
 router.get('/books', getBooks);
 
