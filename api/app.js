@@ -12,7 +12,7 @@ app.set('secretToken', config.secret);
 app.use('/api', routes);
 
 app.get('*', (req, res) => {
-  res.sendFile('./public/index.html', { root: __dirname });
+  res.sendFile('../client/index.html', { root: __dirname });
 });
 
 app.listen(3000, () => {
