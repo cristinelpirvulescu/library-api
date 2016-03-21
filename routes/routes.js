@@ -10,6 +10,12 @@ const bcrypt = require('bcrypt');
 
 app.set('secretToken', config.secret);
 
+/**
+ * Retrieve all the books from database
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Response object
+ * @return {Array<Object>} - The list with books
+ */
 const getBooks = (req, res) => {
   Book.find((err, books) => {
     if (err) {
@@ -20,6 +26,12 @@ const getBooks = (req, res) => {
   });
 };
 
+/**
+ * Add a book to database
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Respone object
+ * @return {Number} Status code
+ */
 const addBook = (req, res) => {
   const reqBody = req.body;
 
@@ -40,6 +52,12 @@ const addBook = (req, res) => {
   });
 };
 
+/**
+ * Update an existing book
+ * @param  {Object} req - Request object
+ * @param  {[type]} res - Response object
+ * @return {Number} Status code
+ */
 const updateBook = (req, res) => {
   const reqBody = req.body;
   const bookId = req.params.id;
@@ -54,6 +72,12 @@ const updateBook = (req, res) => {
   });
 };
 
+/**
+ * Delete an existing book
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Response object
+ * @return {Number} Status code
+ */
 const deleteBook = (req, res) => {
   const bookId = req.params.id;
   const condition = { _id: bookId };
@@ -67,6 +91,12 @@ const deleteBook = (req, res) => {
   });
 };
 
+/**
+ * Create a user
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Response object
+ * @return {Number} Status Code
+ */
 const createUser = (req, res) => {
   const reqBody = req.body;
   const newUser = new User({
@@ -84,6 +114,12 @@ const createUser = (req, res) => {
   });
 };
 
+/**
+ * Authenticate an existing user
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Response object
+ * @return {Object} Success/failure response
+ */
 const authenticateUser = (req, res) => {
   const reqBody = req.body;
   const passwordClear = reqBody.password;
@@ -124,6 +160,13 @@ const authenticateUser = (req, res) => {
   });
 };
 
+/**
+ * Verify authentication token
+ * @param  {Object}   req - Request object
+ * @param  {Object}   res - Response object
+ * @param  {Function} next
+ * @return {Object} Success/failure response
+ */
 const verifyAuthToken = (req, res, next) => {
   // check header or url parameters or post parameters for token
   const token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -144,8 +187,7 @@ const verifyAuthToken = (req, res, next) => {
       next();
     });
   } else {
-    // if there is no token
-    // return an error
+    // if there is no token return an error
     return res.status(403).send({
       success: false,
       message: 'No token provided.',
@@ -154,6 +196,7 @@ const verifyAuthToken = (req, res, next) => {
 };
 
 router.post('/signup', createUser);
+
 // authenticate route
 router.post('/auth', authenticateUser);
 
