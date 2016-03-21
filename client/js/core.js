@@ -3,12 +3,17 @@ const bookLibraryApp = angular.module('bookLibraryApp', ['ngRoute', 'bookControl
 bookLibraryApp.config(['$routeProvider',
   ($routeProvider) => {
     $routeProvider.
-      when('/api/books', {
+      when('/', {
         templateUrl: 'partials/book-list.html',
         controller: 'BookListController',
       }).
-      otherwise({
-        redirectTo: '/',
+      when('/api/auth', {
+        templateUrl: 'partials/user-auth.html',
+        controller: 'BookListController',
+      }).
+      when('/api/books', {
+        templateUrl: 'partials/book-list.html',
+        controller: 'BookListController',
       });
   },
   ]);
