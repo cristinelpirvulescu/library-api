@@ -1,0 +1,5 @@
+{
+  "port": 3000,
+  "files": ["./**/*.{html,htm,css,js}", "./client/**/*.{html,htm,css,js}", "./api/**/*.{html,htm,css,js}"],
+  "server": { "baseDir": "./client" }
+}

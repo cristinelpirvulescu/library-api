@@ -201,7 +201,7 @@ router.post('/signup', createUser);
 router.post('/auth', authenticateUser);
 
 // route middleware to verify a token
-router.use(verifyAuthToken);
+//router.use(verifyAuthToken);
 
 router.get('/books', getBooks);
 
