@@ -65,7 +65,8 @@ This will create the server and automatically connect to the mongoDB database sp
       With the following values specified in the body:
       ```
       username: sampleuser
-      password: testpassword```
+      password: testpassword
+      ```
 
   2. **Authenticate** an existing user
     - **URL**
@@ -95,7 +96,8 @@ This will create the server and automatically connect to the mongoDB database sp
         success: true,
         message: 'Token was created',
         token: '<token>'
-      }```
+      }
+      ```
     - **Error Response**
 
       `Internal Server Error`
@@ -107,7 +109,8 @@ This will create the server and automatically connect to the mongoDB database sp
       With the following values specified in the body:
       ```
       username: sampleuser
-      password: testpassword```
+      password: testpassword
+      ```
 
   3. **Create** a new book
     - **URL**
