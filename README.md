@@ -312,5 +312,5 @@ This will create the server and automatically connect to the mongoDB database sp
         }
       ]
       ```
-  ### Guide used for creating API documentation: https://gist.github.com/iros/3426278
+  #### Guide used for creating API documentation: https://gist.github.com/iros/3426278
 
