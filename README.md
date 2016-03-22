@@ -5,9 +5,9 @@ This is a REST API with the purpose of administering a virtual library.
   - Basic CRUD operations;
 
 ## Technologies Used:
-  - Express(NodeJS);
-  - MongoDB;
-  - JWT;
+  - Express(NodeJS)
+  - MongoDB
+  - JWT
   - ECMAScript 6
 
 ## Instalation and Usage
@@ -17,7 +17,7 @@ The recommended installation method is a local NPM install for the project
 
 After everything is installed, just run
 
-```$ node app.js```
+```$ npm start```
 
 This will create the server and automatically connect to the mongoDB database specified in ```config.js```
 
@@ -312,5 +312,5 @@ This will create the server and automatically connect to the mongoDB database sp
         }
       ]
       ```
-
+  ### Guide used for creating API documentation: https://gist.github.com/iros/3426278
 
