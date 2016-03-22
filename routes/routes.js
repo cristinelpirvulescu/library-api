@@ -16,26 +16,15 @@ app.set('secretToken', config.secret);
  * @return {Array<Object>} - The list with books
  */
 const getBooks = (req, res) => {
-  const reqQuery = req.query;
+  const reqQuery = req.query || {};
 
-  // if URL params are provided, make the search and provide the results according to them
-  if (reqQuery) {
-    Book.find(reqQuery, (err, books) => {
-      if (err) {
-        return res.send(err);
-      }
+  Book.find(reqQuery, (err, books) => {
+    if (err) {
+      return res.send(err);
+    }
 
-      return res.json(books);
-    });
-  } else {
-    Book.find((err, books) => {
-      if (err) {
-        return res.send(err);
-      }
-
-      return res.json(books);
-    });
-  }
+    return res.json(books);
+  });
 };
 
 /**
