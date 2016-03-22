@@ -9,7 +9,6 @@ const bcrypt = require('bcrypt');
 
 
 app.set('secretToken', config.secret);
-
 /**
  * Retrieve all the books from database
  * @param  {Object} req - Request object
@@ -17,13 +16,26 @@ app.set('secretToken', config.secret);
  * @return {Array<Object>} - The list with books
  */
 const getBooks = (req, res) => {
-  Book.find((err, books) => {
-    if (err) {
-      return res.send(err);
-    }
+  const reqQuery = req.query;
 
-    return res.json(books);
-  });
+  // if URL params are provided, make the search and provide the results according to them
+  if (reqQuery) {
+    Book.find(reqQuery, (err, books) => {
+      if (err) {
+        return res.send(err);
+      }
+
+      return res.json(books);
+    });
+  } else {
+    Book.find((err, books) => {
+      if (err) {
+        return res.send(err);
+      }
+
+      return res.json(books);
+    });
+  }
 };
 
 /**
