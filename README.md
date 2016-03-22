@@ -39,7 +39,7 @@ This will create the server and automatically connect to the mongoDB database sp
 
     - **METHOD**
 
-      ```POST```
+      `POST`
 
     - **URL Params**
 
