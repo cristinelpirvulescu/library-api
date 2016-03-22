@@ -227,7 +227,7 @@ This will create the server and automatically connect to the mongoDB database sp
 
       `Code: 200`
 
-  6. **List** all Books
+  6. **List** all Books - if no query-parameters are specified in the URL, then a list with all existing books will be returned.
     - **URL**
 
       `/api/books`
