@@ -21,9 +21,9 @@ After everything is installed, just run
 
 This will create the server and automatically connect to the mongoDB database specified in ```config.js```
 
-  ## ENDPOINTS
+## ENDPOINTS
 
-  **Additional Info:** After authenticating the user, the received token must be added in header for all requests (except /api/signup and /api/auth).
+  **Additional Info:** After authenticating the user, the received token must be added in header for all requests (except `/api/signup` and `/api/auth`).
 
   Otherwise, the following error will occur:
   ```
