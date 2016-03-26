@@ -161,7 +161,7 @@ This will create the server and automatically connect to the mongoDB database sp
 
     - **METHOD**
 
-      `POST`
+      `UPDATE`
 
     - **URL Params**
 
@@ -203,7 +203,7 @@ This will create the server and automatically connect to the mongoDB database sp
 
     - **METHOD**
 
-      `POST`
+      `DELETE`
 
     - **URL Params**
 
