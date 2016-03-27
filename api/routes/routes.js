@@ -10,52 +10,6 @@ const router = module.exports = express.Router();
 app.set('secretToken', config.secret);
 
 /**
- * Authenticate an existing user
- * @param  {Object} req - Request object
- * @param  {Object} res - Response object
- * @return {Object} Success/failure response
- */
-const authenticateUser = (req, res) => {
-  const reqBody = req.body;
-  const passwordClear = reqBody.password;
-
-  // find the test user
-  User.findOne({ username: reqBody.username }, (err, user) => {
-    if (err) {
-      return res.sendStatus(500);
-    }
-
-    if (!user) {
-      return res.json({
-        success: false,
-        message: 'Authentication failed. User not found.',
-      });
-    }
-
-    // check passwords matching
-    bcrypt.compare(passwordClear, user.password, (errCompare, resCompare) => {
-      if (!resCompare) {
-        return res.json({
-          success: false,
-          message: 'Authentication failed. Wrong password',
-        });
-      }
-
-      // if user was found and the password is right create a token
-      const token = jwt.sign(user, app.get('secretToken'), {
-        expiresIn: 3600, // expires in 1h
-      });
-
-      return res.json({
-        success: true,
-        message: 'Token was created.',
-        token: token,
-      });
-    });
-  });
-};
-
-/**
  * Verify authentication token
  * @param  {Object}   req - Request object
  * @param  {Object}   res - Response object
@@ -93,7 +47,7 @@ const verifyAuthToken = (req, res, next) => {
 const createUser = User.createUser.bind(User);
 router.post('/signup', createUser);
 
-// authenticate route
+const authenticateUser = User.authenticateUser.bind(User);
 router.post('/auth', authenticateUser);
 
 // route middleware to verify a token

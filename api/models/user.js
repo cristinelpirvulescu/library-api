@@ -3,6 +3,11 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
 const config = require('../config');
+const jwt = require('jsonwebtoken');
+const express = require('express');
+const app = express();
+
+app.set('secretToken', config.secret);
 
 const UserSchema = new Schema({
   username: {
@@ -76,6 +81,52 @@ UserSchema.statics.createUser = function(req, res) {
     }
 
     res.sendStatus(200);
+  });
+};
+
+/**
+ * Authenticate an existing user
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Response object
+ * @return {Object} Success/failure response
+ */
+UserSchema.statics.authenticateUser = function(req, res) {
+  const reqBody = req.body;
+  const passwordClear = reqBody.password;
+
+  // find the test user
+  this.findOne({ username: reqBody.username }, (err, user) => {
+    if (err) {
+      return res.sendStatus(500);
+    }
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: 'Authentication failed. User not found.',
+      });
+    }
+
+    // check passwords matching
+    bcrypt.compare(passwordClear, user.password, (errCompare, resCompare) => {
+      if (!resCompare) {
+        return res.json({
+          success: false,
+          message: 'Authentication failed. Wrong password',
+        });
+      }
+
+      // if user was found and the password is right create a token
+      const token = jwt.sign(user, app.get('secretToken'), {
+        expiresIn: 3600, // expires in 1h
+      });
+
+      return res.json({
+        success: true,
+        message: 'Token was created.',
+        token: token,
+      });
+    });
   });
 };
 
