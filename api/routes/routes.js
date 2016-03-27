@@ -1,4 +1,6 @@
+'use strict';
 const Book = require('../models/book');
+const bookInstance = new Book();
 const User = require('../models/user');
 const config = require('../config');
 const express = require('express');
@@ -6,7 +8,6 @@ const app = express();
 const router = module.exports = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-
 
 app.set('secretToken', config.secret);
 
@@ -122,10 +123,11 @@ router.post('/auth', authenticateUser);
 // route middleware to verify a token
 //router.use(verifyAuthToken);
 
-router.get('/books', Book.getBooks);
+let getBooks = Book.getBooks.bind(Book);
+router.get('/books', getBooks);
 
-router.post('/books', Book.addBook);
+/*router.post('/books', Book.addBook);
 
 router.put('/books/:id', Book.updateBook);
 
-router.delete('/books/:id', Book.deleteBook);
+router.delete('/books/:id', Book.deleteBook);*/
