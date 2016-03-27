@@ -1,38 +1,13 @@
-'use strict';
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 const Book = require('../models/book');
-const bookInstance = new Book();
 const User = require('../models/user');
 const config = require('../config');
 const express = require('express');
 const app = express();
 const router = module.exports = express.Router();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
 app.set('secretToken', config.secret);
-
-/**
- * Create a user
- * @param  {Object} req - Request object
- * @param  {Object} res - Response object
- * @return {Number} Status Code
- */
-const createUser = (req, res) => {
-  const reqBody = req.body;
-  const newUser = new User({
-    username: reqBody.username,
-    password: reqBody.password,
-  });
-
-  // save user to database
-  newUser.save((err) => {
-    if (err) {
-      res.sendStatus(500);
-    }
-
-    res.sendStatus(200);
-  });
-};
 
 /**
  * Authenticate an existing user
@@ -115,13 +90,14 @@ const verifyAuthToken = (req, res, next) => {
   }
 };
 
+const createUser = User.createUser.bind(User);
 router.post('/signup', createUser);
 
 // authenticate route
 router.post('/auth', authenticateUser);
 
 // route middleware to verify a token
-//router.use(verifyAuthToken);
+router.use(verifyAuthToken);
 
 const getBooks = Book.getBooks.bind(Book);
 router.get('/books', getBooks);

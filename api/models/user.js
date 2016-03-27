@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const SALT_WORK_FACTOR = 10;
+const config = require('../config');
 
 const UserSchema = new Schema({
   username: {
@@ -39,7 +40,8 @@ function generateHash(next) {
       next();
     });
   });
-}
+};
+
 
 UserSchema.pre('save', generateHash);
 
@@ -50,6 +52,30 @@ UserSchema.methods.comparePassword = (candidatePassword, callback) => {
     }
 
     callback(null, isMatch);
+  });
+};
+
+/**
+ * Create an user
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Response object
+ * @return {Number} Status Code
+ */
+UserSchema.statics.createUser = function(req, res) {
+  const reqBody = req.body;
+  const newUser = new this({
+    username: reqBody.username,
+    password: reqBody.password,
+  });
+
+  // save user to database
+  newUser.save((err) => {
+    if (err) {
+      console.log(err);
+      res.sendStatus(500);
+    }
+
+    res.sendStatus(200);
   });
 };
 
