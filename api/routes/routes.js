@@ -123,11 +123,12 @@ router.post('/auth', authenticateUser);
 // route middleware to verify a token
 //router.use(verifyAuthToken);
 
-let getBooks = Book.getBooks.bind(Book);
+const getBooks = Book.getBooks.bind(Book);
 router.get('/books', getBooks);
 
-/*router.post('/books', Book.addBook);
+const addBook = Book.addBook.bind(Book);
+router.post('/books', addBook);
 
-router.put('/books/:id', Book.updateBook);
+/*router.put('/books/:id', Book.updateBook);
 
 router.delete('/books/:id', Book.deleteBook);*/

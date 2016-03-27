@@ -20,6 +20,7 @@ const BookSchema = new Schema({
  * @return {Array<Object>} - The list with books
  */
 BookSchema.statics.getBooks = function(req, res) {
+  console.log(this);
   return this.find((err, books) => {
     if (err) {
       return res.send(err);
@@ -28,5 +29,34 @@ BookSchema.statics.getBooks = function(req, res) {
     return res.json(books);
   });
 };
+
+/**
+ * Add a book to database
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Respone object
+ * @return {Number} Status code
+ */
+BookSchema.statics.addBook = function(req, res) {
+  const reqBody = req.body;
+
+  let newBook = new this({
+    title: reqBody.title,
+    author: reqBody.author,
+    ISBN: reqBody.isbn,
+    genre: reqBody.genre,
+    year: reqBody.year,
+  });
+
+  newBook.save((err) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+};
+
+
+
 
 module.exports = mongoose.model('Book', BookSchema);
