@@ -29,4 +29,30 @@ BookModel.getBooks = function(req, res) {
   });
 };
 
+/**
+ * Add a book to database
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Respone object
+ * @return {Number} Status code
+ */
+BookModel.addBook = (req, res) => {
+  const reqBody = req.body;
+
+  const newBook = new BookModel({
+    title: reqBody.title,
+    author: reqBody.author,
+    ISBN: reqBody.isbn,
+    genre: reqBody.genre,
+    year: reqBody.year,
+  });
+
+  newBook.save((err) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+};
+
 module.exports = mongoose.model('Book', BookModel);

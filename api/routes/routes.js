@@ -9,48 +9,31 @@ const bcrypt = require('bcrypt');
 
 
 app.set('secretToken', config.secret);
+// /**
+//  * Add a book to database
+//  * @param  {Object} req - Request object
+//  * @param  {Object} res - Respone object
+//  * @return {Number} Status code
+//  */
+// const addBook = (req, res) => {
+//   const reqBody = req.body;
 
-/**
- * Retrieve all the books from database
- * @param  {Object} req - Request object
- * @param  {Object} res - Response object
- * @return {Array<Object>} - The list with books
- */
-// const getBooks = (req, res) => {
-//   Book.find((err, books) => {
+//   const newBook = new Book({
+//     title: reqBody.title,
+//     author: reqBody.author,
+//     ISBN: reqBody.isbn,
+//     genre: reqBody.genre,
+//     year: reqBody.year,
+//   });
+
+//   newBook.save((err) => {
 //     if (err) {
-//       return res.send(err);
+//       res.sendStatus(500);
+//     } else {
+//       res.sendStatus(200);
 //     }
-
-//     return res.json(books);
 //   });
 // };
-
-/**
- * Add a book to database
- * @param  {Object} req - Request object
- * @param  {Object} res - Respone object
- * @return {Number} Status code
- */
-const addBook = (req, res) => {
-  const reqBody = req.body;
-
-  const newBook = new Book({
-    title: reqBody.title,
-    author: reqBody.author,
-    ISBN: reqBody.isbn,
-    genre: reqBody.genre,
-    year: reqBody.year,
-  });
-
-  newBook.save((err) => {
-    if (err) {
-      res.sendStatus(500);
-    } else {
-      res.sendStatus(200);
-    }
-  });
-};
 
 /**
  * Update an existing book
@@ -202,10 +185,10 @@ router.post('/auth', authenticateUser);
 
 // route middleware to verify a token
 //router.use(verifyAuthToken);
-console.log(Book.getBooks);
+
 router.get('/books', Book.getBooks);
 
-router.post('/books', addBook);
+router.post('/books', Book.addBook);
 
 router.put('/books/:id', updateBook);
 
