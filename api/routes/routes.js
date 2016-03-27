@@ -129,6 +129,8 @@ router.get('/books', getBooks);
 const addBook = Book.addBook.bind(Book);
 router.post('/books', addBook);
 
-/*router.put('/books/:id', Book.updateBook);
+const updateBook = Book.updateBook.bind(Book);
+router.put('/books/:id', updateBook);
 
+/*
 router.delete('/books/:id', Book.deleteBook);*/
