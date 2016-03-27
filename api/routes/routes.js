@@ -16,15 +16,15 @@ app.set('secretToken', config.secret);
  * @param  {Object} res - Response object
  * @return {Array<Object>} - The list with books
  */
-const getBooks = (req, res) => {
-  Book.find((err, books) => {
-    if (err) {
-      return res.send(err);
-    }
+// const getBooks = (req, res) => {
+//   Book.find((err, books) => {
+//     if (err) {
+//       return res.send(err);
+//     }
 
-    return res.json(books);
-  });
-};
+//     return res.json(books);
+//   });
+// };
 
 /**
  * Add a book to database
@@ -194,7 +194,7 @@ const verifyAuthToken = (req, res, next) => {
     });
   }
 };
-
+console.log(Book.getBooks);
 router.post('/signup', createUser);
 
 // authenticate route
@@ -202,8 +202,8 @@ router.post('/auth', authenticateUser);
 
 // route middleware to verify a token
 //router.use(verifyAuthToken);
-
-router.get('/books', getBooks);
+console.log(Book.getBooks);
+router.get('/books', Book.getBooks);
 
 router.post('/books', addBook);
 
