@@ -78,24 +78,24 @@ BookSchema.statics.updateBook = function(req, res) {
 };
 
 
-// /**
-//  * Delete an existing book
-//  * @param  {Object} req - Request object
-//  * @param  {Object} res - Response object
-//  * @return {Number} Status code
-//  */
-// BookModel.deleteBook = (req, res) => {
-//   const bookId = req.params.id;
-//   const condition = { _id: bookId };
+/**
+ * Delete an existing book
+ * @param  {Object} req - Request object
+ * @param  {Object} res - Response object
+ * @return {Number} Status code
+ */
+BookSchema.statics.deleteBook = function(req, res) {
+  const bookId = req.params.id;
+  const condition = { _id: bookId };
 
-//   BookModel.findOneAndRemove(condition, (err) => {
-//     if (err) {
-//       res.sendStatus(500);
-//     } else {
-//       res.sendStatus(200);
-//     }
-//   });
-// };
+  this.findOneAndRemove(condition, (err) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+  });
+};
 
 
 module.exports = mongoose.model('Book', BookSchema);
