@@ -20,7 +20,6 @@ const BookSchema = new Schema({
  * @return {Array<Object>} - The list with books
  */
 BookSchema.statics.getBooks = function(req, res) {
-  console.log(this);
   return this.find((err, books) => {
     if (err) {
       return res.send(err);
