@@ -1,11 +1,40 @@
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="cold-lg-12">
-      <ul class="books">
-        <li ng-repeat="book in books">
-          <p> {{book.title}} </p>
-        </li>
-      </ul>
+    <div class="cold-lg-4">
+      <table class="table" ng-controller="BookListController">
+        <thead>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Year</th>
+          <th>Genre</th>
+        </thead>
+        <tbody>
+          <tr ng-repeat="book in books">
+            <td>{{book.title}}</td>
+            <td>{{book.author}}</td>
+            <td>{{book.year}}</td>
+            <td>{{book.genre}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form ng-submit="createBook()">
+        <fieldset>
+          <label for="1">Title</label>
+          <input type="text" id="1" class="form-control" ng-model="form.title">
+
+          <label for="2">Author</label>
+          <input type="text" id="2" class="form-control" ng-model="form.author">
+
+          <label for="3">Year</label>
+          <input type="number" id="3" class="form-control" ng-model="form.year">
+
+          <label for="4">Genre</label>
+          <input type="text" id="4" class="form-control" ng-model="form.genre">
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary btn-lg">Create Book</button>
+      </form>
     </div>
   </div>
 </div>
